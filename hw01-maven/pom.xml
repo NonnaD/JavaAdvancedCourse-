@@ -37,7 +37,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>hw01-maven.HelloOtus</mainClass>
+                            <mainClass>otus.homeworks.HelloOtus</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
