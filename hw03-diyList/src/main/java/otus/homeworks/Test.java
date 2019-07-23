@@ -11,21 +11,21 @@ public class Test {
     List<String> destination;
 
     //Verify DIYList<> works for more than 20 elements
-  /*  for(int i = 0; i < 25; i++){
+    for(int i = 0; i < 25; i++){
       testList.add(i + " element");
-    }*/
-  //  System.out.println(testList.get(23));
+    }
+   System.out.println(testList.get(23));
 
     //Verify .addAll method works for DIYList class
-    Collections.addAll(testList, "anew Element", "vnew Element 2", "dnew Element 3 ");
+    Collections.addAll(testList, "new Element", "new Element 2", "new Element 3 ");
     System.out.println(testList);
 
 
     //Verify .copy method works for DIYList class
-   /* destination = new DIYList<>(testList);
+    destination = new DIYList<>(testList);
     System.out.println(destination.size());
     Collections.copy(destination, testList);
-    System.out.println(destination);*/
+    System.out.println(destination);
 
 
     //Verify sorting method
