@@ -8,11 +8,12 @@ public class Test {
   public static void main(String[] args) {
 
     List<String> testList = new DIYList<>();
+    List<String> sortList = new DIYList<>();
     List<String> destination;
 
     //Verify DIYList<> works for more than 20 elements
-    for(int i = 0; i < 25; i++){
-      testList.add(i + " element");
+    for(int i = 30; i >0; i--){
+      testList.add(i + "element");
     }
    System.out.println(testList.get(23));
 
@@ -29,7 +30,8 @@ public class Test {
 
 
     //Verify sorting method
-    Collections.sort(testList, new DIYComparator());
-    System.out.println(testList);
+    Collections.addAll(sortList, "s", "o", "r", "t", "i", "n", "g");
+    Collections.sort(sortList, new DIYComparator());
+    System.out.println(sortList);
     }
 }

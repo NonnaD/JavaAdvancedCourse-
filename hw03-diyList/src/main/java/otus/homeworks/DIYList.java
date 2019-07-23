@@ -2,6 +2,7 @@ package otus.homeworks;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
@@ -132,7 +133,14 @@ public class DIYList<T> extends DIYRandomAccess
 
   @Override
   public T set(int index, T element) {
-    throw new UnsupportedOperationException("Method is not implemented");
+    Objects.checkIndex(index, arraySize);
+    T oldValue = elementData(index);
+    defaultArray[index] = element;
+    return oldValue;
+  }
+
+  T elementData(int index) {
+    return (T) defaultArray[index];
   }
 
   @Override
@@ -181,6 +189,13 @@ public class DIYList<T> extends DIYRandomAccess
   static <E> E elementAt(Object[] es, int index) {
     return (E) es[index];
   }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public void sort(Comparator<? super T> c) {
+    Arrays.sort((T[]) defaultArray, 0, arraySize, c);
+  }
+
 
   /**
    * An optimized version of AbstractList.Itr
