@@ -22,11 +22,20 @@
     </modules>
 
     <properties>
+        <!--region General-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <java.version>12</java.version>
+        <!--endregion-->
+        <!--region BOMs (Bill of Materials)-->
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+        <!--endregion-->
+        <!--region Libraries-->
         <com.google.guava.version>27.1-jre</com.google.guava.version>
+        <org.checkerframework.version>2.9.0</org.checkerframework.version>
         <my.variable>42</my.variable>
+        <!--endregion-->
     </properties>
 
     <dependencyManagement>
@@ -35,6 +44,24 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${com.google.guava.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.checkerframework</groupId>
+                        <artifactId>checker</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker</artifactId>
+                <version>${org.checkerframework.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
