@@ -28,10 +28,9 @@ public class Test {
     Collections.copy(destination, testList);
     System.out.println(destination);
 
-
     //Verify sorting method
     Collections.addAll(sortList, "s", "o", "r", "t", "i", "n", "g");
-    Collections.sort(sortList, new DIYComparator());
+    Collections.sort(sortList, new DIYStringComparator());
     System.out.println(sortList);
     }
 }

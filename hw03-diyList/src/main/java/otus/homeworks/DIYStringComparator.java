@@ -2,7 +2,7 @@ package otus.homeworks;
 
 import java.util.Comparator;
 
-public class DIYComparator implements Comparator<String> {
+public class DIYStringComparator<T extends String> implements Comparator<T> {
 
   @Override
   public int compare(String a, String b) {

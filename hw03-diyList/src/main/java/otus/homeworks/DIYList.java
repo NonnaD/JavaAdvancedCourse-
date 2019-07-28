@@ -11,31 +11,44 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class DIYList<T> extends DIYRandomAccess
+public class DIYList<T>
     implements List<T> {
 
-  private Object[] defaultArray = {};
+  private Object[] dataArray = {};
   private Object[] emptyArray = {};
+  private Object[] printArray = new Object[100];
   private int arraySize;
 
   public DIYList() {
-    this.defaultArray = emptyArray;
+    this.dataArray = emptyArray;
   }
 
   public DIYList(Collection<? extends T> e) {
-    defaultArray = e.toArray();
-    if ((arraySize = defaultArray.length) != 0) {
-      if (defaultArray.getClass() != Object[].class) {
-        defaultArray = Arrays.copyOf(defaultArray, arraySize, Object[].class);
+    dataArray = e.toArray();
+    if ((arraySize = dataArray.length) != 0) {
+      if (dataArray.getClass() != Object[].class) {
+        dataArray = Arrays.copyOf(dataArray, arraySize, Object[].class);
       }
     } else {
-      this.defaultArray = emptyArray;
+      this.dataArray = emptyArray;
     }
   }
 
   @Override
   public String toString() {
-    return Arrays.toString(defaultArray);
+    Iterator<T> it = iterator();
+    if (! it.hasNext())
+      return "[]";
+
+    StringBuilder sb = new StringBuilder();
+    sb.append('[');
+    for (;;) {
+      T e = it.next();
+      sb.append(e == this ? "(this Collection)" : e);
+      if (! it.hasNext())
+        return sb.append(']').toString();
+      sb.append(',').append(' ');
+    }
   }
 
   @Override
@@ -60,7 +73,7 @@ public class DIYList<T> extends DIYRandomAccess
 
   @Override
   public Object[] toArray() {
-    return Arrays.copyOf(defaultArray, arraySize);
+    return Arrays.copyOf(dataArray, arraySize);
   }
 
   @Override
@@ -70,24 +83,21 @@ public class DIYList<T> extends DIYRandomAccess
 
   @Override
   public boolean add(T t) {
-    add(arraySize, defaultArray, t);
+    add(arraySize, dataArray, t);
     return true;
   }
 
   private void add(int s, Object[] array, T element) {
     if (s == array.length || s < 0) {
-      array = extendArray(arraySize + 1);
-      array[s] = element;
-      arraySize++;
-    } else {
-      array[s] = element;
-      arraySize++;
+      array = extendArray(arraySize + 8);
     }
+    array[s] = element;
+    arraySize++;
   }
 
 
   private Object[] extendArray(int newSize) {
-    return defaultArray = Arrays.copyOf(defaultArray,
+    return dataArray = Arrays.copyOf(dataArray,
         newSize);
   }
 
@@ -128,19 +138,20 @@ public class DIYList<T> extends DIYRandomAccess
 
   @Override
   public T get(int index) {
-    return (T) defaultArray[index];
+    Objects.checkIndex(index, arraySize);
+    return (T) dataArray[index];
   }
 
   @Override
   public T set(int index, T element) {
     Objects.checkIndex(index, arraySize);
     T oldValue = elementData(index);
-    defaultArray[index] = element;
+    dataArray[index] = element;
     return oldValue;
   }
 
   T elementData(int index) {
-    return (T) defaultArray[index];
+    return (T) dataArray[index];
   }
 
   @Override
@@ -193,7 +204,7 @@ public class DIYList<T> extends DIYRandomAccess
   @Override
   @SuppressWarnings("unchecked")
   public void sort(Comparator<? super T> c) {
-    Arrays.sort((T[]) defaultArray, 0, arraySize, c);
+    Arrays.sort((T[]) dataArray, 0, arraySize, c);
   }
 
 
@@ -218,7 +229,7 @@ public class DIYList<T> extends DIYRandomAccess
       int i = cursor;
       if (i >= arraySize)
         throw new NoSuchElementException();
-      Object[] elementData = DIYList.this.defaultArray;
+      Object[] elementData = DIYList.this.dataArray;
       if (i >= elementData.length)
         throw new ConcurrentModificationException();
       cursor = i + 1;
@@ -227,12 +238,12 @@ public class DIYList<T> extends DIYRandomAccess
 
     @Override
     public boolean hasPrevious() {
-      return false;
+      throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
     public T previous() {
-      return null;
+      throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
@@ -276,7 +287,7 @@ public class DIYList<T> extends DIYRandomAccess
       final int size = DIYList.this.arraySize;
       int i = cursor;
       if (i < size) {
-        final Object[] es = defaultArray;
+        final Object[] es = dataArray;
         if (i >= es.length)
           throw new ConcurrentModificationException();
         for (; i < size && 0 == expectedModCount; i++)
@@ -321,7 +332,7 @@ public class DIYList<T> extends DIYRandomAccess
       int i = cursor - 1;
       if (i < 0)
         throw new NoSuchElementException();
-      Object[] elementData = DIYList.this.defaultArray;
+      Object[] elementData = DIYList.this.dataArray;
       if (i >= elementData.length)
         throw new ConcurrentModificationException();
       cursor = i;
