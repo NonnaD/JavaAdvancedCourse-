@@ -18,6 +18,7 @@
 
     <modules>
         <module>hw01-maven</module>
+        <module>hw03-diyList</module>
     </modules>
 
     <properties>
@@ -64,6 +65,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
