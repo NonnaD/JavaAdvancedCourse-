@@ -87,12 +87,12 @@ public class DIYList<T>
     return true;
   }
 
-  private void add(int s, Object[] array, T element) {
-    if (s == array.length || s < 0) {
-      array = extendArray(arraySize + 8);
+  private void add(int arraySize, Object[] array, T element) {
+    if (arraySize == array.length || arraySize < 0) {
+      array = extendArray(this.arraySize + 8);
     }
-    array[s] = element;
-    arraySize++;
+    array[arraySize] = element;
+    this.arraySize++;
   }
 
 
