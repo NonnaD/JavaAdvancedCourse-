@@ -31,7 +31,7 @@
         <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
         <!--endregion-->
         <!--region Libraries-->
-        <com.google.guava.version>27.1-jre</com.google.guava.version>
+        <com.google.guava.version>29.0-jre</com.google.guava.version>
         <org.checkerframework.version>2.9.0</org.checkerframework.version>
         <my.variable>42</my.variable>
         <!--endregion-->
